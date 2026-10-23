@@ -20,13 +20,11 @@ From October 26 through November 1, 2026, I plan to focus on one tool each day a
 
 [Progress tracker](PROGRESS.md)
 
-## My lab
+## Lab Infrastructure
 
-My main computer runs Windows 11, and a separate physical Kali Linux PC will be my testing workstation. Both connect through an unmanaged switch. VMware is installed on Windows, where I plan to host deliberately vulnerable training machines.
+My lab uses a dedicated physical Kali workstation and VMware Workstation on Windows, with Metasploitable 2 behind a restricted Ubuntu gateway. I've checked target connectivity, a blocked outbound probe, and behavior after reboot. My [lab setup notes](docs/lab-setup.md) cover the network design, troubleshooting, and testing limits.
 
-Lab networking and target setup are still pending. The switch alone doesn't isolate the lab; I'll establish the testing boundaries before starting.
-
-Testing will be limited to my own training systems or targets I have explicit permission to assess. Raw evidence will stay in a separate private shared workspace. Only reviewed, sanitized material will go here, without passwords, tokens, private network details, or sensitive packet captures.
+Testing is limited to my own training systems or explicitly authorized targets. Raw evidence stays in a private shared workspace; only reviewed, sanitized material belongs here.
 
 ## What I want to learn
 
