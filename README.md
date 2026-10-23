@@ -22,7 +22,7 @@ From October 26 through November 1, 2026, I plan to focus on one tool each day a
 
 ## My lab
 
-My main computer runs Windows 11, and a separate physical Kali Linux PC will be my testing workstation. Both connect through a TP-Link TL-SG105 unmanaged switch. VMware is installed on Windows, where I plan to host deliberately vulnerable training machines.
+My main computer runs Windows 11, and a separate physical Kali Linux PC will be my testing workstation. Both connect through an unmanaged switch. VMware is installed on Windows, where I plan to host deliberately vulnerable training machines.
 
 Lab networking and target setup are still pending. The switch alone doesn't isolate the lab; I'll establish the testing boundaries before starting.
 
