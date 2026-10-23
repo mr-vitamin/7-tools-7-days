@@ -1,38 +1,50 @@
-# Day 7: nikto
+# Day 7: Nikto
+
 Scheduled: 2026-11-01
 Focus: Web server assessment and final report
 
-# Daily investigation
-Status: Not started
+Status: Not Started
 Date:
 Tool and version:
 
 ## Objectives
-Record the question and learning goals.
+What I want to understand:
 
-## Environment and authorization
-Record approved target aliases, versions, permitted activities, and exclusions. Keep private IP mappings and configuration outside Git.
+## Environment and scope
+Approved lab target aliases:
+Permission and testing boundaries:
+Relevant system and tool versions:
 
-## Commands and procedure
-Record sanitized commands or UI steps, their purpose, and relevant options. Replace confidential values with placeholders.
+## Commands and approach
+Sanitized commands or steps:
+Why I chose them:
 
 ## Evidence
-Link reviewed evidence using an ID, filename, collection time and timezone, and explanation. Keep raw originals in the private workspace.
+Reviewed files, evidence IDs, collection times and timezone:
+What each item shows:
 
 ## Findings
-Not assessed. Record observations, supporting evidence IDs, impact, and severity rationale. Distinguish hypotheses and tool alerts from confirmed findings.
+Not assessed.
+
+Observations and supporting evidence:
+Possible impact:
+Confirmed findings vs. questions that need more testing:
 
 ## Limitations
-Record coverage gaps, unsuccessful steps, assumptions, and tool limitations.
+What I couldn't test or confirm:
+Errors, assumptions, or gaps:
 
 ## Remediation
-Suggest fixes for supported findings and explain how to retest. Do not claim unperformed remediation.
+Suggested fixes for supported findings:
+How I would check whether a fix worked:
+Retest outcome: Not performed
 
 ## Lessons learned
-Explain what you learned, difficulties, and next steps.
+What I learned:
+What was difficult:
+What I want to practice next:
 
-## Publication review
-- [ ] No passwords, tokens, private configuration, or sensitive captures.
-- [ ] Screenshots and metadata inspected and sanitized.
-- [ ] Every finding has supporting evidence.
-- [ ] Status reflects work actually performed.
+## Publication check
+- [ ] Published evidence is sanitized, including filenames and metadata.
+- [ ] Findings are supported by evidence, with uncertainty explained.
+- [ ] The status reflects the work I've actually done.

@@ -1,8 +1,9 @@
-# Evidence handling
-Raw originals belong in the private shared workspace, outside Git. Preserve them unchanged.
+# My evidence notes
 
-Use names such as day-01_nmap_2026-10-26_001_description.png. Record timestamps and timezone. Avoid credentials and target addresses in filenames.
+I'll keep raw screenshots, packet captures, logs, and lab notes in the private shared workspace. Published evidence will be a separate, sanitized copy, so the originals stay unchanged.
 
-Create separate sanitized copies. Inspect visible content, embedded text, metadata, and filenames for private addresses, usernames, credentials, tokens, and confidential information. Prefer sanitized text excerpts over captures. PCAPs are excluded from Git.
+My naming pattern will be something like day-01_nmap_2026-10-26_001_description.png. Each investigation will include evidence IDs, collection times and timezone, and a short explanation of what the files show.
 
-Publication staging means awaiting review, not approved. Copy only reviewed material into repository evidence folders. Inspect git status, staged filenames, and the complete staged diff before committing. Ignore rules do not protect already tracked files or detect all secrets.
+Before publishing, I'll review the content, filenames, and metadata for credentials, tokens, usernames, private addresses, and other confidential details. Packet captures will stay private; sanitized text excerpts will usually be enough to explain an observation.
+
+The publication-staging folder is a place for copies awaiting review. I'll move selected files into the repository only after checking them, then review the staged filenames and full Git diff before committing. The ignore rules help exclude sensitive file types, but they can't catch every secret or protect files already tracked by Git.

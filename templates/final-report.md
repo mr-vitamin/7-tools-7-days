@@ -1,41 +1,57 @@
-# Final Penetration-Testing Report
-Status: Not started — template only
+# Final penetration-testing report
+
+Status: Not Started
 Author:
 Assessment dates:
 Report date and version:
 
 ## Executive summary
-Write after testing: actual scope, activities, supported outcomes, and key limitations.
+What I tested:
+Main supported findings:
+Most important limitations:
 
 ## Authorization and scope
-Approved target aliases, permission, permitted activities, and exclusions. Keep private target mappings outside the report.
+Approved target aliases and permission:
+Activities included:
+Systems or activities excluded:
 
-## Environment and methodology
-Actual lab environment, tool versions, investigation methods, and coverage.
+## Lab and approach
+Environment and tool versions:
+Investigations performed:
+What the testing covered:
 
 ## Findings summary
-Not assessed. An empty table does not establish that targets are secure.
 
-| ID | Finding | Target alias | Severity and rationale | Evidence | Status |
+Not assessed.
+
+| ID | Finding | Target alias | Severity and reasoning | Evidence | Status |
 | --- | --- | --- | --- | --- | --- |
 
-## Detailed finding — repeat for each supported finding
-- ID and title:
-- Observation and sanitized reproduction steps:
-- Evidence IDs:
-- Impact and severity rationale:
-- Recommended remediation:
-- Retest procedure:
-- Retest outcome: Not performed
+## Finding details
+
+Finding ID and title:
+What I observed:
+Sanitized steps to reproduce:
+Supporting evidence IDs:
+Impact and severity reasoning:
+Suggested fix:
+How I would retest:
+Retest outcome: Not performed
 
 ## Limitations
-Coverage gaps, assumptions, time constraints, and unverified alerts.
+Coverage gaps:
+Assumptions:
+Alerts or observations I couldn't verify:
 
 ## Remediation priorities
-Prioritize supported findings and explain sequencing.
+Which supported findings I would address first, and why:
 
-## Conclusion and learning reflection
-Summarize demonstrated skills and remaining learning needs without overstating coverage.
+## Reflection
+What I learned:
+What I can explain or demonstrate from this work:
+Where I need more practice:
 
 ## Evidence index
-Reviewed evidence IDs, relative paths, collection times/timezone, and related findings.
+
+| Evidence ID | Reviewed file | Collection time and timezone | Related finding |
+| --- | --- | --- | --- |

@@ -1,40 +1,43 @@
 # 7 Tools in 7 Days
 
-A cybersecurity learning portfolio scheduled for October 26–November 1, 2026. Practice seven tools, document reproducible investigations, and explain observations, limitations, and remediation.
+I'm a cybersecurity student taking on a seven-day challenge to get hands-on experience with penetration testing tools, strengthen my Kali Linux and networking fundamentals, and build practical cybersecurity skills.
 
-**All exercises are not started.** This repository contains blank records and preparation only.
+From October 26 through November 1, 2026, I plan to focus on one tool each day and document what I try, what the results mean, and where I need more practice. This repository will be my record of that learning.
 
-## Scope
-Test only personally controlled training targets or systems with explicit permission. Record authorization, targets, permitted activities, and exclusions before testing. Do not scan public systems or unrelated home-network devices. Stop if scope is uncertain.
+**Current status: Not Started.** The investigation notes and report are blank templates for the upcoming challenge.
 
-## Schedule
-See [PROGRESS.md](PROGRESS.md) for each tool and date. Day 1 begins Monday, October 26; Day 7 ends Sunday, November 1, 2026.
+## Seven-day schedule
 
-## Lab environment
-Windows 11 is the documentation workstation. A separate physical Kali Linux PC is the primary testing workstation. Both connect through a TP-Link TL-SG105 unmanaged switch. VMware is installed on Windows and will eventually host deliberately vulnerable training machines. Target setup and lab networking are separate prerequisites; they have not been configured by this project. The switch alone does not provide lab isolation.
+| Day | Date | Tool | Focus |
+| --- | --- | --- | --- |
+| 1 | October 26 | Nmap | Network reconnaissance |
+| 2 | October 27 | Wireshark | Packet analysis |
+| 3 | October 28 | Gobuster | Web directory enumeration |
+| 4 | October 29 | Burp Suite | Web application testing |
+| 5 | October 30 | Metasploit | Exploitation in an authorized lab |
+| 6 | October 31 | John the Ripper | Password auditing |
+| 7 | November 1 | Nikto | Web server assessment and final report |
 
-Private raw evidence belongs in the separate shared workspace. Do not publish share addresses, private network configuration, credentials, or sensitive packet captures.
+[Progress tracker](PROGRESS.md)
 
-## Learning objectives
-- Understand reconnaissance, packet analysis, web enumeration, web testing, controlled exploitation, password auditing, and server assessment.
-- Explain commands and interpret evidence critically.
-- Distinguish confirmed findings from hypotheses and automated alerts.
-- Communicate limitations and practical remediation.
-- Build Linux, networking, and troubleshooting competence.
+## My lab
 
-## Workflow
-1. Confirm authorization and prepared lab boundaries.
-2. Fill in the appropriate record under investigations.
-3. Preserve raw evidence in the private workspace.
-4. Create and review sanitized copies before adding selected files to this repository.
-5. Update progress honestly and complete the final report after testing.
-6. Inspect every staged file and diff before committing or publishing.
+My main computer runs Windows 11, and a separate physical Kali Linux PC will be my testing workstation. Both connect through a TP-Link TL-SG105 unmanaged switch. VMware is installed on Windows, where I plan to host deliberately vulnerable training machines.
 
-## Layout
-- investigations: seven daily records and sanitized evidence.
-- templates: reusable daily record and final report.
-- docs: Kali fundamentals and evidence guidance.
-- reports: future sanitized final report.
-- PROGRESS.md: schedule and actual status.
+Lab networking and target setup are still pending. The switch alone doesn't isolate the lab; I'll establish the testing boundaries before starting.
 
-No passwords, tokens, private configurations, confidential data, or sensitive captures may be committed. Ignore rules are a safeguard, not a secret detector. No license is selected.
+Testing will be limited to my own training systems or targets I have explicit permission to assess. Raw evidence will stay in a separate private shared workspace. Only reviewed, sanitized material will go here, without passwords, tokens, private network details, or sensitive packet captures.
+
+## What I want to learn
+
+- Use each tool and understand its options and output.
+- Connect the exercises to Linux commands, networking, and troubleshooting.
+- Explain observations with evidence and separate confirmed findings from tool alerts.
+- Recognize gaps in my testing and suggest practical fixes for supported findings.
+- Write clear investigation notes and a final report.
+
+## Project notes
+
+The [investigations](investigations/) folder has a record for each day, with space for commands, evidence, findings, limitations, and lessons learned. I'll track Linux concepts in my [Kali fundamentals log](docs/kali-fundamentals.md) and use the [templates](templates/) for consistent notes and reporting.
+
+The [reports](reports/) folder is reserved for the final report. My [evidence notes](docs/evidence-handling.md) explain how I'll keep private originals separate from published copies.
