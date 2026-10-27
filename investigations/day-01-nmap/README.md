@@ -18,7 +18,7 @@ I started with Nmap reconnaissance, then checked selected services directly. My 
 
 I used my physical Kali Linux workstation to assess my Metasploitable 2 VM through the restricted Ubuntu gateway. Testing was limited to that authorized lab target. The [lab setup](../../docs/lab-setup.md) describes the network and its limits.
 
-The commands below replace the real address with TARGET. They are sanitized records of the commands used, not additional tests.
+TARGET replaces the real lab address in the commands I used.
 
 ## Commands and approach
 
@@ -44,34 +44,36 @@ I initially combined two TCP scan methods, which Nmap rejected. I also confused 
 
 | Evidence | Observation | What it establishes |
 | --- | --- | --- |
-| [D1-01: Default scan](evidence/screenshots/01-default-scan.png) | 23 open TCP ports; 977 closed ports in the default 1,000-port scan | A broad exposed service surface within the tested selection, not a scan of all ports |
+| [D1-01: Default scan](evidence/screenshots/01-default-scan.png) | 23 open TCP ports; 977 closed ports in the default 1,000-port scan | The exposed services within the default TCP selection |
 | [D1-02: Shell identity](evidence/screenshots/02-root-shell-verification.png) | Remote whoami returned root; id returned uid=0 | Root-level command execution through the existing unauthenticated listener on TCP/1524 |
 | [D1-03: SMB operations](evidence/screenshots/03-smb-directory-cleanup.png) | A test directory appeared in the share; later removal was followed by an object-not-found response | Anonymous directory creation and deletion, with cleanup |
 
-D1-01 and D1-02 were collected October 26; D1-03 was collected October 27. These are cropped screenshot excerpts. Redactions remove personal prompts and network identifiers; no result text was replaced. The root account name in D1-02 is part of the privilege evidence.
+D1-01 and D1-02 were collected October 26; D1-03 was collected October 27. These are cropped screenshot excerpts. Redactions cover personal prompts and network identifiers. The visible result text is unchanged. The root account name in D1-02 is part of the privilege evidence.
 
-The advanced scan identified vsftpd 2.3.4, OpenSSH 4.7p1, Apache 2.2.8, and Samba 3.0.20, among other services. It showed a two-hop path and did not provide an exact OS match. These are tool identifications, not independent confirmation of every version or vulnerability.
+The advanced scan identified vsftpd 2.3.4, OpenSSH 4.7p1, Apache 2.2.8, and Samba 3.0.20, among other services. It showed a two-hop path. The service versions are recorded as Nmap identifications.
 
 ## Findings
 
-**Exposed root shell — manually verified.** I connected to TCP/1524 and ran harmless identity commands. This demonstrated actual remote root command execution, not just a scanner warning. I used an already exposed shell; I did not deploy an exploit payload or demonstrate privilege escalation.
+**Exposed root shell — manually verified.** I connected to TCP/1524 and ran harmless identity commands. The commands confirmed remote execution with root privileges through the existing listener.
 
-**Anonymous SMB directory changes — manually verified.** Nmap reported anonymous access, and smbclient allowed listing the tmp share. I created a test directory with md, listed it, then removed it with rmdir after returning to its parent. A later attempt to enter it returned NT_STATUS_OBJECT_NAME_NOT_FOUND. File upload, modification, download, and deletion were not separately verified.
+**Anonymous SMB directory changes — manually verified.** Nmap reported anonymous access, and smbclient allowed listing the tmp share. I created a test directory with md, listed it, then removed it with rmdir after returning to its parent. A later attempt to enter it returned NT_STATUS_OBJECT_NAME_NOT_FOUND.
 
-**Anonymous FTP login and empty listings — manually verified.** Both NSE and direct FTP interaction showed successful anonymous authentication. The FTP client returned successful listing-transfer responses without displaying entries. Upload, deletion, and download permissions remain untested.
+**Anonymous FTP login and empty listings — manually verified.** Both NSE and direct FTP interaction showed successful anonymous authentication. The FTP client returned successful listing-transfer responses without displaying entries.
 
-**FTP backdoor — not confirmed.** TCP/6200 was closed when checked. The reported FTP version prompted research, but I did not demonstrate the backdoor trigger or execute an exploit against it. A matching version and a closed listener do not settle whether the compromised code is present.
+**FTP backdoor — unverified hypothesis.** The reported FTP version prompted research into a possible backdoor. My targeted scan found TCP/6200 closed at the time of testing.
 
-**SMB signing — scanner-reported.** NSE reported signing disabled. I did not perform a relay or interception attack.
+**SMB signing — scanner-reported.** NSE reported signing disabled.
 
 ## Limitations and remediation
 
-This was a focused learning exercise, not a complete penetration test. The initial scans covered the default TCP selection, with later targeted checks; there was no comprehensive UDP assessment.
+The initial scans covered the default TCP selection, followed by targeted checks. Coverage excluded a comprehensive UDP assessment. Nmap returned no exact OS match, and the reported service versions need independent validation.
 
+
+The root-shell test used an existing listener; it involved no deployed exploit payload or demonstrated privilege escalation. The suspected FTP backdoor remains unverified because I did not test its trigger. SMB file upload, modification, download, and deletion permissions were not separately tested. FTP upload, deletion, and download permissions also remain untested. SMB signing was assessed through NSE output, with no relay or interception test.
 On a production system, I would remove the unauthenticated shell, restrict SMB to authenticated users with necessary permissions, review anonymous FTP access, and use encrypted file-transfer protocols. Reported legacy services would need further assessment and supported replacements or updates. No production remediation or remediation retest was performed.
 
 ## Lessons learned
 
-Open ports are starting points, not automatic vulnerabilities. Service names can be inferred from port numbers, and version detection does not prove a specific weakness. Directly testing one operation gives more precise evidence than treating reported READ/WRITE access as unlimited control.
+I learned to use open ports and service versions to choose the next test. A port-based service label needs checking, and each reported permission needs an operation that verifies it. Creating and removing a directory gave me specific evidence of anonymous SMB access.
 
-FTP also helped me separate connectivity, authentication, and authorization: a successful login did not establish a data connection or prove file permissions. My strongest takeaway was to state exactly what each test demonstrated and what remained unknown.
+FTP made the steps easier to understand: establish the connection, authenticate, open the data connection, and test an operation. I now record the result of each step and the questions it leaves open.

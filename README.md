@@ -2,7 +2,7 @@
 
 I'm a cybersecurity student taking on a seven-day challenge to get hands-on experience with penetration testing tools, strengthen my Kali Linux and networking fundamentals, and build practical cybersecurity skills.
 
-From October 26 through November 1, 2026, I plan to focus on one tool each day and document what I try, what the results mean, and where I need more practice. This repository will be my record of that learning.
+The challenge runs from October 26 through November 1, 2026. I focus on one tool each day and keep a record of my commands, results, and questions.
 
 **Current status: Days 1 and 2 completed.** Nmap and Wireshark investigations are documented; Days 3–7 are Not Started.
 
@@ -20,7 +20,7 @@ From October 26 through November 1, 2026, I plan to focus on one tool each day a
 
 [Progress tracker](PROGRESS.md)
 
-## Lab Infrastructure
+## Lab infrastructure
 
 My lab uses a dedicated physical Kali workstation and VMware Workstation on Windows, with Metasploitable 2 behind a restricted Ubuntu gateway. I've checked target connectivity, a blocked outbound probe, and behavior after reboot. My [lab setup notes](docs/lab-setup.md) cover the network design, troubleshooting, and testing limits.
 
@@ -30,7 +30,7 @@ Testing is limited to my own training systems or explicitly authorized targets. 
 
 - Use each tool and understand its options and output.
 - Connect the exercises to Linux commands, networking, and troubleshooting.
-- Explain observations with evidence and separate confirmed findings from tool alerts.
+- Use evidence to explain findings and evaluate tool alerts.
 - Recognize gaps in my testing and suggest practical fixes for supported findings.
 - Write clear investigation notes and a final report.
 

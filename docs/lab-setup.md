@@ -8,7 +8,7 @@ My dedicated physical Kali Linux PC is the testing workstation. My Windows 11 PC
 
 Ubuntu has three adapters: VMware NAT for its existing default route, VMnet1 host-only for the target, and a bridged adapter for Kali to reach the gateway. Metasploitable uses only the host-only network.
 
-The diagram shows logical connections, not unrestricted access.
+The diagram shows the logical network connections. The forwarding restrictions are described below.
 
 ```mermaid
 flowchart LR
@@ -28,7 +28,7 @@ flowchart LR
     K -.->|"Samba file sharing with Windows"| W
 ```
 
-VMnet1 also connects to the Windows host. Traffic directly between devices on that subnet does not pass through Ubuntu's firewall.
+VMnet1 also connects to the Windows host.
 
 ## Routing and restrictions
 
@@ -47,8 +47,8 @@ A persistent Samba share connects Windows and Kali, appearing as a mapped drive 
 I ran the prepared setup scripts and used command output, connection tests, and packet captures to check the results.
 
 - **Physical-to-virtual connectivity:** Kali could not directly reach the host-only target. The Ubuntu gateway and target-specific route provided that path without bridging the vulnerable VM onto the home network.
-- **Firewall ordering:** The new bridged adapter stayed disconnected until its restrictions were loaded. Forwarding was off initially but on after reboot; Docker was a possible cause, not a confirmed one. This showed why isolation needed explicit firewall rules rather than relying on forwarding staying disabled.
-- **A failed ping wasn't enough:** The first counter reading did not establish a firewall drop. A repeated probe, packet capture, and fresh counter reading showed where the traffic stopped.
+- **Firewall ordering:** The new bridged adapter stayed disconnected until its restrictions were loaded. Forwarding was off initially but on after reboot; I could not establish the cause. The guard kept the lab path restricted while forwarding was enabled.
+- **Tracing a blocked probe:** I repeated the ping while capturing packets on Ubuntu, then checked a fresh counter reading. Three captured requests matched three firewall drops.
 
 The main lesson for me was to verify the route, packet arrival, and firewall decision separately.
 
@@ -67,6 +67,6 @@ The isolation probe used a temporary target route that was removed afterward.
 
 ## Limits
 
-These tests verify specific paths, not every protocol or possible bypass. Another home device attempting to reach the target through Ubuntu was not directly tested. Source-address filtering is not authentication and does not prevent address spoofing. The unmanaged switch provides no VLAN isolation, and direct VMnet1 traffic bypasses the gateway.
+Testing covered the paths listed above. Access attempts from another home device to the target through Ubuntu remain untested. Source addresses can be spoofed. The unmanaged switch provides no VLAN isolation, and direct VMnet1 traffic bypasses the gateway.
 
 Target-initiated reverse shells are blocked by the current policy. DHCP reservations are unavailable to me, so address changes may require route and rule updates. I will check the addresses before lab sessions. Real addresses, account details, and full firewall configurations are kept outside this repository.
