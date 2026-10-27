@@ -1,6 +1,6 @@
 # My penetration-testing lab
 
-I prepared this lab for my 7 Tools in 7 Days challenge so I could practice against an intentionally vulnerable target in a controlled environment. The infrastructure is working, while all seven tool investigations remain **Not Started**.
+I prepared this lab for my 7 Tools in 7 Days challenge so I could practice against an intentionally vulnerable target in a controlled environment. The infrastructure supports the tool investigations tracked in the [progress log](../PROGRESS.md).
 
 ## How the machines connect
 

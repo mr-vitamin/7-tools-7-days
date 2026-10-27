@@ -4,7 +4,7 @@ I'm a cybersecurity student taking on a seven-day challenge to get hands-on expe
 
 From October 26 through November 1, 2026, I plan to focus on one tool each day and document what I try, what the results mean, and where I need more practice. This repository will be my record of that learning.
 
-**Current status: Not Started.** The investigation notes and report are blank templates for the upcoming challenge.
+**Current status: Days 1 and 2 completed.** Nmap and Wireshark investigations are documented; Days 3–7 are Not Started.
 
 ## Seven-day schedule
 
