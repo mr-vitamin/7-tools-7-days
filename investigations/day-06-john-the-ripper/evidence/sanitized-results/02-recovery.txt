@@ -1,0 +1,10 @@
+D6-02: John positive wordlist run
+Sanitization: recovered disposable value redacted where present. No hash, salt or candidate list is included.
+
+Loaded 1 password hash (crypt, generic crypt(3) [?/64])
+Will run 16 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+[DISPOSABLE VALUE REDACTED] (disposable)
+1g 0:00:00:00 100% 25.00g/s 100.0p/s 100.0c/s 100.0C/s rainfall..windowbox
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed

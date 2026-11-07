@@ -1,0 +1,70 @@
+D4-01: Burp HTTP-client request comparisons
+Burp Suite Community Edition 2026.9; extension API; single target HTTP/80; interception disabled; no automated scan.
+Sanitization: target address replaced with TARGET; date headers and all full response bodies omitted. Body counts below are measured character counts after HTTP parsing.
+
+01-baseline
+GET / HTTP/1.1
+Host: TARGET
+Connection: close
+
+HTTP/1.1 200 OK
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+X-Powered-By: PHP/5.2.4-2ubuntu5.10
+Connection: close
+Content-Type: text/html
+Content-Length: 891
+Body characters: 891
+<title>Metasploitable2 - Linux</title>
+
+02-query
+GET /?lab=day4 HTTP/1.1
+Host: TARGET
+Connection: close
+
+HTTP/1.1 200 OK
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+X-Powered-By: PHP/5.2.4-2ubuntu5.10
+Connection: close
+Content-Type: text/html
+Content-Length: 891
+Body characters: 891
+<title>Metasploitable2 - Linux</title>
+
+03-head
+HEAD / HTTP/1.1
+Host: TARGET
+Connection: close
+
+HTTP/1.1 200 OK
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+X-Powered-By: PHP/5.2.4-2ubuntu5.10
+Connection: close
+Content-Type: text/html
+Body characters: 0
+
+04-missing
+GET /seven-tools-control-7cfac1 HTTP/1.1
+Host: TARGET
+Connection: close
+
+HTTP/1.1 404 Not Found
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+Content-Length: 309
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+Body characters: 309
+<title>404 Not Found</title>
+
+05-diagnostic
+GET /phpinfo.php HTTP/1.1
+Host: TARGET
+Connection: close
+
+HTTP/1.1 200 OK
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+X-Powered-By: PHP/5.2.4-2ubuntu5.10
+Connection: close
+Content-Type: text/html
+Content-Length: 47762
+Body characters: 47762
+<title>phpinfo()</title>

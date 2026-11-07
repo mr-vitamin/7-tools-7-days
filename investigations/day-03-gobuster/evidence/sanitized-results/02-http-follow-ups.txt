@@ -1,0 +1,57 @@
+D3-02: Independent HTTP follow-up excerpts
+Sanitization: target address replaced with TARGET; full bodies, cookies, dates and network details omitted. Titles and diagnostic strings below are exact response excerpts.
+
+GET http://TARGET/dav/
+HTTP status: 200
+<title>Index of /dav</title>
+<h1>Index of /dav</h1>
+
+GET http://TARGET/dvwa/
+HTTP status: 302
+Location: login.php
+
+GET http://TARGET/phpinfo
+HTTP status: 200
+<title>phpinfo()</title>
+PHP Version 5.2.4
+
+GET http://TARGET/phpinfo.php
+HTTP status: 200
+<title>phpinfo()</title>
+PHP Version 5.2.4
+
+GET http://TARGET/phpMyAdmin/
+HTTP status: 200
+<title>phpMyAdmin </title>
+
+GET http://TARGET/test/
+HTTP status: 200
+<title>Index of /test</title>
+<h1>Index of /test</h1>
+
+GET http://TARGET/twiki/
+HTTP status: 200
+<title>Welcome to TWiki - A Web-based Collaboration Platform</title>
+
+GET http://TARGET/mutillidae/
+HTTP status: 200
+
+GET http://TARGET/index
+HTTP status: 200
+<title>Metasploitable2 - Linux</title>
+
+GET http://TARGET/index.php
+HTTP status: 200
+<title>Metasploitable2 - Linux</title>
+
+GET http://TARGET/admin
+HTTP status: 404
+<title>404 Not Found</title>
+
+GET http://TARGET/.git
+HTTP status: 404
+<title>404 Not Found</title>
+
+GET http://TARGET/seven-tools-control-7cfac1
+HTTP status: 404
+<title>404 Not Found</title>

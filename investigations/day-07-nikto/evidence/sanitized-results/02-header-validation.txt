@@ -1,0 +1,40 @@
+D7-02: Independent response-header validation
+Python urllib from Kali; HTTP/80 only; target address replaced with TARGET; date headers and response bodies omitted.
+
+GET http://TARGET/
+HTTP status: 200
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+X-Powered-By: PHP/5.2.4-2ubuntu5.10
+Connection: close
+Transfer-Encoding: chunked
+Content-Type: text/html
+referrer-policy: absent
+strict-transport-security: absent
+content-security-policy: absent
+x-content-type-options: absent
+permissions-policy: absent
+
+HEAD http://TARGET/
+HTTP status: 200
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+X-Powered-By: PHP/5.2.4-2ubuntu5.10
+Connection: close
+Content-Type: text/html
+referrer-policy: absent
+strict-transport-security: absent
+content-security-policy: absent
+x-content-type-options: absent
+permissions-policy: absent
+
+GET http://TARGET/phpinfo.php
+HTTP status: 200
+Server: Apache/2.2.8 (Ubuntu) DAV/2
+X-Powered-By: PHP/5.2.4-2ubuntu5.10
+Connection: close
+Transfer-Encoding: chunked
+Content-Type: text/html
+referrer-policy: absent
+strict-transport-security: absent
+content-security-policy: absent
+x-content-type-options: absent
+permissions-policy: absent

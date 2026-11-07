@@ -1,0 +1,40 @@
+D5-01: Metasploit auxiliary FTP version output
+Sanitization: target address replaced with TARGET; local paths, command-prompt prefixes, and terminal formatting omitted. Command labels identify extracted commands; result lines are retained.
+
+Command: version
+Framework: 6.5.7-dev
+Console  : 6.5.7-dev
+Command: use auxiliary/scanner/ftp/ftp_version
+Command: set RHOSTS TARGET
+RHOSTS => TARGET
+Command: set RPORT 21
+RPORT => 21
+Command: set THREADS 1
+THREADS => 1
+Command: set ConnectTimeout 5
+ConnectTimeout => 5
+Command: show options
+
+Module options (auxiliary/scanner/ftp/ftp_version):
+
+   Name     Current Setting  Required  Description
+   ----     ---------------  --------  -----------
+   RHOSTS   TARGET   yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.html
+   RPORT    21               yes       The target port (TCP)
+   THREADS  1                yes       The number of concurrent threads (max one per host)
+
+
+View the full module info with the info, or info -d command.
+
+Command: run
+[+] TARGET:21     - FTP Banner: vsFTPd 2.3.4
+[*] TARGET:21     - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+Command: sessions -l
+
+Active sessions
+===============
+
+No active sessions.
+
+Command: exit -y

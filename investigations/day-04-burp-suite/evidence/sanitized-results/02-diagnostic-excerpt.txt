@@ -1,0 +1,9 @@
+D4-02: Diagnostic response excerpt
+GET /phpinfo.php HTTP/1.1
+Host: TARGET
+
+HTTP/1.1 200 OK
+PHP Version 5.2.4
+<title>phpinfo()</title>
+
+Sanitization: selected exact body strings only; server paths, addresses and remaining diagnostic content omitted.

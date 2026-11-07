@@ -1,0 +1,16 @@
+D4-03: Separate HTTP-client follow-ups
+Requests made directly from Kali using Python urllib, without Burp. Target address replaced with TARGET; bodies and timestamps omitted except selected exact title strings.
+
+GET http://TARGET/ -> 200
+<title>Metasploitable2 - Linux</title>
+
+HEAD http://TARGET/ -> 200
+
+GET http://TARGET/phpinfo.php -> 200
+<title>phpinfo()</title>
+
+GET http://TARGET/seven-tools-control-7cfac1 -> 404
+<title>404 Not Found</title>
+
+OPTIONS http://TARGET/ -> 200
+<title>Metasploitable2 - Linux</title>

@@ -1,0 +1,8 @@
+D6-01: John negative wordlist run
+Sanitization: recovered disposable value redacted where present. No hash, salt or candidate list is included.
+
+Loaded 1 password hash (crypt, generic crypt(3) [?/64])
+Will run 16 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+0g 0:00:00:00 100% 0g/s 75.00p/s 75.00c/s 75.00C/s rainfall..windowbox
+Session completed

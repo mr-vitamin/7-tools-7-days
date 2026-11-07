@@ -1,0 +1,9 @@
+D5-02: Independent FTP protocol replies
+Sanitization: target endpoint replaced with TARGET:21; execution timestamps omitted.
+
+TCP connect to TARGET:21
+220 (vsFTPd 2.3.4)
+Client: QUIT
+221 Goodbye.
+
+No USER or PASS command was submitted in this independent check.

@@ -1,0 +1,7 @@
+D6-03: Independent verification output
+No hashes or plaintext values are included.
+
+independent_sha512crypt_match: True
+matches_disposable_known_value: True
+negative_show_summary: 0 password hashes cracked, 1 left
+positive_show_summary: 1 password hash cracked, 0 left

@@ -1,0 +1,20 @@
+D3-01: Gobuster output excerpt
+Sanitization: target address replaced with TARGET; terminal control codes and execution timestamps omitted.
+
+Command:
+gobuster dir -u http://TARGET/ -w words.txt -t 2 --delay 100ms --timeout 5s --no-color -o results.txt
+
+/dav                  (Status: 301) [Size: 319] [--> http://TARGET/dav/]
+/dvwa                 (Status: 301) [Size: 320] [--> http://TARGET/dvwa/]
+/index                (Status: 200) [Size: 891]
+/index.php            (Status: 200) [Size: 891]
+/mutillidae           (Status: 301) [Size: 326] [--> http://TARGET/mutillidae/]
+/phpinfo              (Status: 200) [Size: 48002]
+/phpinfo.php          (Status: 200) [Size: 48014]
+/phpMyAdmin           (Status: 301) [Size: 326] [--> http://TARGET/phpMyAdmin/]
+/test                 (Status: 301) [Size: 320] [--> http://TARGET/test/]
+/twiki                (Status: 301) [Size: 321] [--> http://TARGET/twiki/]
+
+Console error excerpt:
+[ERROR] Get "http://TARGET/server-status": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+Finished

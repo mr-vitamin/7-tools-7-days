@@ -3,48 +3,62 @@
 Scheduled: 2026-10-29
 Focus: Web application testing
 
-Status: Not Started
-Date:
-Tool and version:
+Status: Completed
+
+This investigation compares individual HTTP requests and responses with Burp. My focus was on a query-string change, a different request method, a missing path, and the diagnostic page found during enumeration.
 
 ## Objectives
-What I want to understand:
+
+- Inspect the relationship between an HTTP request and its response.
+- Compare a baseline with one change at a time.
+- Confirm a content disclosure with a separate HTTP client.
 
 ## Environment and scope
-Approved lab target aliases:
-Permission and testing boundaries:
-Relevant system and tool versions:
+
+The Burp Suite Community Edition 2026.9 exercise ran on my physical Kali workstation against Metasploitable 2 on HTTP/80 through the existing Ubuntu gateway. The target's home page and the saved route were checked before testing. My [lab setup](../../docs/lab-setup.md) describes the path and restrictions.
+
+Burp's HTTP client sent five requests through its extension API in headless mode. Interception was disabled, and scope included only the target's HTTP URL. TARGET replaces the private address. This exercise used no authenticated session or automated vulnerability scan.
 
 ## Commands and approach
-Sanitized commands or steps:
-Why I chose them:
 
-## Evidence
-Reviewed files, evidence IDs, collection times and timezone:
-What each item shows:
+| Request or setting | Purpose |
+| --- | --- |
+| GET / HTTP/1.1 | Establish the home-page baseline |
+| GET /?lab=day4 HTTP/1.1 | Compare the response after adding a harmless query parameter |
+| HEAD / HTTP/1.1 | Compare response headers with the GET response without retrieving its body |
+| GET /seven-tools-control-7cfac1 HTTP/1.1 | Check a missing-path control |
+| GET /phpinfo.php HTTP/1.1 | Inspect the diagnostic endpoint found during Day 3 |
+| Host: TARGET; Connection: close | Keep each request directed at the lab host and close its connection |
+| Python urllib requests from Kali | Check selected responses independently of Burp |
+
+An earlier headless launch under WSL produced Java/Swing errors before any target test. The installed Kali copy completed all five requests after a startup-option syntax correction. UI errors were still logged, while the saved request/response pairs verified the HTTP-client function.
+
+## Evidence and results
+
+| Evidence | Observation | What it establishes |
+| --- | --- | --- |
+| [D4-01: Request comparisons](evidence/sanitized-results/01-request-comparisons.txt) | Baseline and query requests returned 200 with identical 891-character bodies; HEAD returned 200 with no body; the missing path returned 404 | The observed differences between these particular requests |
+| [D4-02: Diagnostic response](evidence/sanitized-results/02-diagnostic-excerpt.txt) | /phpinfo.php returned 200 and PHP Version 5.2.4 | Diagnostic content was accessible without authentication |
+| [D4-03: Independent requests](evidence/sanitized-results/03-independent-follow-ups.txt) | A separate client returned the same selected statuses and page titles | The endpoint behavior was reproduced outside Burp |
+
+The excerpts preserve request methods, paths, status lines, selected headers, and relevant body strings. Addresses and execution timestamps are omitted or replaced; complete bodies remain private.
+
+The unchanged home-page body after adding lab=day4 does not establish that the application processed or validated the parameter. HEAD's empty body was consistent with its purpose; the matching status did not mean it returned the GET body.
 
 ## Findings
-Not assessed.
 
-Observations and supporting evidence:
-Possible impact:
-Confirmed findings vs. questions that need more testing:
+**Diagnostic disclosure - independently reproduced.** Burp retrieved the phpinfo() page without authentication. A separate client confirmed the same endpoint and title. This supports the Day 3 disclosure finding and adds a second tool's request/response evidence.
 
-## Limitations
-What I couldn't test or confirm:
-Errors, assumptions, or gaps:
+**Request handling - observed.** The query variation, HEAD request, and missing-path control produced distinguishable results. These comparisons establish response behavior for the tested requests. They do not demonstrate input validation, injection, or authentication bypass.
 
-## Remediation
-Suggested fixes for supported findings:
-How I would check whether a fix worked:
-Retest outcome: Not performed
+## Limitations and remediation
+
+Testing covered five Burp HTTP-client requests and separate read-only follow-ups. Forms, session handling, authorization between users, SQL injection, script execution, and HTTPS interception were outside this exercise. Burp's UI errors limit what I can claim about the headless interface, while the saved responses support the HTTP-client results.
+
+For a production application, I would remove or restrict the diagnostic page and reduce unnecessary server-version disclosure. I would retest that endpoint from an unauthenticated client and verify the application's required routes afterward. No server changes or remediation retest were performed.
 
 ## Lessons learned
-What I learned:
-What was difficult:
-What I want to practice next:
 
-## Publication check
-- [ ] Published evidence is sanitized, including filenames and metadata.
-- [ ] Findings are supported by evidence, with uncertainty explained.
-- [ ] The status reflects the work I've actually done.
+For HTTP comparisons, I would change one part of a request at a time. The control response shows why a 200 status needs the body and request context beside it.
+
+For future tests, I would check each tool function against its saved results. The HTTP-client evidence here supports the comparisons; GUI and Repeater operation were not tested.
