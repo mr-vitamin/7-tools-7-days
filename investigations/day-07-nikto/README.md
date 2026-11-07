@@ -1,11 +1,11 @@
 # Day 7: Nikto
 
 Scheduled: 2026-11-01
-Focus: Web server assessment and final report
+Focus: Bounded web-server assessment
 
 Status: Completed
 
-My final investigation pairs a three-minute Nikto scan with independent HTTP checks of selected alerts. The focus was web-server configuration and information disclosure, with the time-limit termination retained as part of the result.
+My final investigation brought the web-server observations together with a three-minute Nikto scan. Direct HTTP requests checked selected alerts, including the context behind a missing HSTS header on an HTTP service.
 
 ## Objectives
 
@@ -17,7 +17,7 @@ My final investigation pairs a three-minute Nikto scan with independent HTTP che
 
 The Nikto 2.6.1 run used Ubuntu under WSL on my Windows host against Metasploitable 2 on HTTP/80 through the existing host-only connection. The target's VM adapter identity and home page were checked before testing. Independent HTTP follow-ups used my physical Kali workstation through the Ubuntu gateway.
 
-The [lab setup](../../docs/lab-setup.md) describes the gateway restrictions and direct host-only path. No network security setting changed. TARGET replaces the private address below.
+The [lab setup](../../docs/lab-setup.md) describes the gateway restrictions and direct host-only path. The scan and follow-ups used those existing connections. TARGET replaces the private address below.
 
 ## Commands and approach
 
@@ -27,7 +27,7 @@ The [lab setup](../../docs/lab-setup.md) describes the gateway restrictions and 
 | perl nikto/program/nikto.pl -h http://TARGET/ -Tuning 123b -Plugins 'headers;tests' -maxtime 180s -Pause 0.1 -timeout 5 -nocheck -nolookup -nointeractive -Format txt -output report.txt | Limit the run to one host, selected configuration/disclosure/identification tests, selected plugins, and a three-minute ceiling |
 | GET /; HEAD /; GET /phpinfo.php | Independently inspect selected response headers from Kali |
 
-The HTTP follow-ups used Python urllib. The scan categories were interesting files, misconfiguration/default files, information disclosure, and software identification. The pause reduced the request rate; it was not a guarantee of a fixed rate.
+The HTTP follow-ups used Python urllib. The scan categories were interesting files, misconfiguration/default files, information disclosure, and software identification. The pause spaced requests; response times also affected the rate.
 
 The initial launch required the XML::Writer dependency. Nikto also rejected combining a full URL with a separate -port option. Installing the dependency in the testing environment and using the URL alone resolved those setup issues. The assessment then ran until its configured time limit.
 
@@ -52,12 +52,12 @@ Nikto reported PHP version disclosure and missing Referrer-Policy, Strict-Transp
 
 ## Limitations and remediation
 
-The scan ended before completing its selected tests. Its six items are observations from a partial run, not a comprehensive vulnerability inventory. Testing excluded HTTPS validation, authenticated areas, browser exploitation, denial-of-service testing, and remediation retesting. An unreported issue may still exist.
+Nikto stopped at its configured time limit before exhausting the selected tests. The follow-ups validated the reported headers on the chosen HTTP responses. Authenticated areas, HTTPS configuration, browser exploitation, and denial-of-service testing were outside this assessment.
 
-For a real deployment, I would remove diagnostic pages, reduce unnecessary version disclosure, and replace unsupported software after validating the actual packages. I would add suitable browser-protection headers and test the application for compatibility. HTTPS and certificate validation would come before enabling and checking HSTS over HTTPS. No server configuration changes were performed.
+For a real deployment, I would remove diagnostic pages, reduce unnecessary version disclosure, and assess the installed packages for supported replacements. Suitable browser-protection headers would need application compatibility checks. HTTPS and certificate validation would come before assessing HSTS over HTTPS. No server configuration changes or remediation retests were performed.
 
 ## Lessons learned
 
-I would check scanner alerts against the responses they describe before assigning impact. The direct HTTP requests support the header observations and show why the HSTS alert needs HTTPS context.
+The scan reported one error when it reached the time limit. That termination belongs beside the six reported items because it explains the coverage. The independent requests answered specific alert questions without repeating the whole scan.
 
-In a future assessment, I would keep the scan termination details alongside the verified findings. Completing selected follow-ups does not turn a bounded scan into exhaustive coverage.
+The HSTS alert was a reminder to read the protocol context. My next question for a separate HTTPS assessment would be whether a trusted TLS service exists and what policy it returns. The HTTP responses here support the narrower header observations.

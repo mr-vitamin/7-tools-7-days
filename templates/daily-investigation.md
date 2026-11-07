@@ -1,47 +1,50 @@
-# Daily investigation
+# Daily investigation template
 
-Status: Not Started
-Date:
-Tool and version:
+Reusable blank template for a future investigation. This file is separate from the completed 7 Tools in 7 Days reports.
+
+Tool and version: [record version]
+Scheduled date: [if applicable]
+Investigation date(s): [actual dates and timezone]
+Status: [set from the work and evidence]
 
 ## Objectives
-What I want to understand:
+
+- [State the question or skill this investigation addresses.]
 
 ## Environment and scope
-Approved lab target aliases:
-Permission and testing boundaries:
-Relevant system and tool versions:
+
+[Identify authorized target aliases, the testing path, and relevant boundaries.]
 
 ## Commands and approach
-Sanitized commands or steps:
-Why I chose them:
 
-## Evidence
-Reviewed files, evidence IDs, collection times and timezone:
-What each item shows:
+| Command or setting | Purpose |
+| --- | --- |
+| [Sanitized command] | [Explain its purpose] |
+
+[Record actual command errors, unexpected results, and troubleshooting.]
+
+## Evidence and results
+
+| Evidence | Observation | What it establishes |
+| --- | --- | --- |
+| [Evidence ID and relative link] | [Visible result] | [Supported interpretation] |
+
+[Explain redactions and record collection timestamps and provenance privately where needed.]
 
 ## Findings
-Not assessed.
 
-Observations and supporting evidence:
-Possible impact:
-Confirmed findings vs. questions that need more testing:
+[Separate confirmed findings, tool identifications, and questions that need further testing. Explain relevant impact.]
 
-## Limitations
-What I couldn't test or confirm:
-Errors, assumptions, or gaps:
+## Limitations and remediation
 
-## Remediation
-Suggested fixes for supported findings:
-How I would check whether a fix worked:
-Retest outcome: Not performed
+[State meaningful coverage limits, supported fixes, and a proposed retest. Record a remediation outcome only if tested.]
 
 ## Lessons learned
-What I learned:
-What was difficult:
-What I want to practice next:
+
+[Explain what the results and troubleshooting show. Keep personal claims grounded in the work actually performed.]
 
 ## Publication check
-- [ ] Published evidence is sanitized, including filenames and metadata.
-- [ ] Findings are supported by evidence, with uncertainty explained.
-- [ ] The status reflects the work I've actually done.
+
+- [ ] Findings and completion status match the evidence.
+- [ ] Public files, filenames, and metadata are sanitized.
+- [ ] Evidence references and relative links resolve.

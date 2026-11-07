@@ -22,7 +22,7 @@ TARGET replaces the real lab address in the commands I used.
 
 ## Commands and approach
 
-| Command | Why I used it |
+| Command | Purpose |
 | --- | --- |
 | nmap TARGET | Establish a baseline using the default TCP port selection |
 | nmap -sT TARGET | Compare a TCP connect scan with the baseline |
@@ -66,14 +66,13 @@ The advanced scan identified vsftpd 2.3.4, OpenSSH 4.7p1, Apache 2.2.8, and Samb
 
 ## Limitations and remediation
 
-The initial scans covered the default TCP selection, followed by targeted checks. Coverage excluded a comprehensive UDP assessment. Nmap returned no exact OS match, and the reported service versions need independent validation.
+The scans covered the default TCP selection, followed by targeted checks. Coverage excluded a comprehensive UDP assessment. Nmap returned no exact OS match, and the reported service versions need independent validation.
 
-
-The root-shell test used an existing listener; it involved no deployed exploit payload or demonstrated privilege escalation. The suspected FTP backdoor remains unverified because I did not test its trigger. SMB file upload, modification, download, and deletion permissions were not separately tested. FTP upload, deletion, and download permissions also remain untested. SMB signing was assessed through NSE output, with no relay or interception test.
+The root-shell result came from an existing listener and established root-level execution, without a deployed exploit payload or demonstrated privilege escalation. The suspected FTP backdoor remains unverified because I did not test its trigger. SMB file upload, modification, download, and deletion permissions were not separately tested. FTP upload, deletion, and download permissions also remain untested. SMB signing was assessed through NSE output, with no relay or interception test.
 On a production system, I would remove the unauthenticated shell, restrict SMB to authenticated users with necessary permissions, review anonymous FTP access, and use encrypted file-transfer protocols. Reported legacy services would need further assessment and supported replacements or updates. No production remediation or remediation retest was performed.
 
 ## Lessons learned
 
-I learned to use open ports and service versions to choose the next test. A port-based service label needs checking, and each reported permission needs an operation that verifies it. Creating and removing a directory gave me specific evidence of anonymous SMB access.
+I learned to use open ports and service versions to choose the next test. The shell identity commands checked what the listener allowed, and creating and removing a directory established specific anonymous SMB permissions.
 
-FTP made the steps easier to understand: establish the connection, authenticate, open the data connection, and test an operation. I now record the result of each step and the questions it leaves open.
+FTP made the separate steps easier to follow: establish the connection, authenticate, open the data connection, and test an operation. That sequence helped explain why a successful login and a successful file operation answer different questions.

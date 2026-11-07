@@ -1,6 +1,6 @@
 # My penetration-testing lab
 
-I prepared this lab for my 7 Tools in 7 Days challenge so I could practice against an intentionally vulnerable target in a controlled environment. The infrastructure supports the tool investigations tracked in the [progress log](../PROGRESS.md).
+I prepared this lab for my 7 Tools in 7 Days challenge so I could practice against an intentionally vulnerable target in a controlled environment. The lab supported all seven investigations in the [completed project](../reports/final-report.md).
 
 ## How the machines connect
 
@@ -28,7 +28,7 @@ flowchart LR
     K -.->|"Samba file sharing with Windows"| W
 ```
 
-VMnet1 also connects to the Windows host.
+VMnet1 also connects to the Windows host. Gobuster and the Nikto scan ran in Ubuntu under WSL on that host and reached the target through this direct host-only path. John's offline hash exercise also ran in WSL. Burp, Metasploit, and independent HTTP follow-ups ran on physical Kali through the gateway.
 
 ## Routing and restrictions
 
@@ -37,6 +37,10 @@ A persistent NetworkManager route on Kali sends only the target's address throug
 The gateway configuration combines a separate nftables guard with a specific UFW routed permission. It permits Kali-initiated target traffic and established replies, and drops other forwarding through the lab and bridged interfaces. Incoming traffic to Ubuntu's bridged interface is blocked except DHCP replies. Existing Docker firewall rules were preserved.
 
 Configuration backups and targeted rollback scripts are stored privately. The setup uses saved network profiles, a boot-time guard service, and a persistent IPv4 forwarding setting.
+
+## Terminal access to Kali
+
+Windows-to-Kali terminal access used a temporary, key-authenticated SSH listener with a source-restricted firewall exception. That access configuration was in place before the remote exercises and was separate from the Ubuntu gateway rules governing target traffic. The exercises used the existing target route and gateway restrictions. The temporary SSH access was removed after testing, and removal was verified.
 
 ## File sharing
 
@@ -69,4 +73,4 @@ The isolation probe used a temporary target route that was removed afterward.
 
 Testing covered the paths listed above. Access attempts from another home device to the target through Ubuntu remain untested. Source addresses can be spoofed. The unmanaged switch provides no VLAN isolation, and direct VMnet1 traffic bypasses the gateway.
 
-Target-initiated reverse shells are blocked by the current policy. DHCP reservations are unavailable to me, so address changes may require route and rule updates. I will check the addresses before lab sessions. Real addresses, account details, and full firewall configurations are kept outside this repository.
+The configured policy blocks target-initiated reverse shells. DHCP reservations were unavailable, so address changes can affect saved routes and rules. The addresses and target identity were checked before the relevant tests. Real addresses, account details, and full firewall configurations remain private.

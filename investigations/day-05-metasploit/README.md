@@ -15,9 +15,9 @@ Metasploit's FTP version module and a separate FTP connection returned the same 
 
 ## Environment and scope
 
-The Metasploit Framework 6.5.7 exercise ran on my physical Kali workstation against Metasploitable 2 through the restricted Ubuntu gateway. Testing was limited to service enumeration and banner validation on TCP/21 of the verified lab target. Exploitation was outside the defined scope. My [lab setup](../../docs/lab-setup.md) explains the network restrictions.
+The Metasploit Framework 6.5.7 exercise ran on my physical Kali workstation against Metasploitable 2 through the restricted Ubuntu gateway. Testing covered service enumeration and banner validation on TCP/21 of the verified lab target. My [lab setup](../../docs/lab-setup.md) explains the network restrictions.
 
-TARGET replaces the private address. The version module uses a connection initiated from Kali. It requires no reverse connection, account credentials, or target configuration change.
+TARGET replaces the private address. The version module uses a connection initiated from Kali and reads the service greeting.
 
 ## Commands and approach
 
@@ -45,18 +45,18 @@ These text excerpts replace the target address with TARGET and omit terminal for
 
 ## Findings
 
-**FTP service identification - independently corroborated.** Both Metasploit and a separate connection received the vsFTPd 2.3.4 identification. This is stronger evidence of what the service advertises than a port-number label alone.
+**FTP service identification - independently corroborated.** Both Metasploit and a separate connection received the vsFTPd 2.3.4 identification. The matching greetings corroborate the advertised service version.
 
-**FTP backdoor - unverified.** A matching version string does not prove that the installed executable contains a backdoor. No exploit trigger, command execution, or privilege change was tested. The earlier Day 1 hypothesis remains unresolved.
+**FTP backdoor - unverified.** A matching version string does not prove that the installed executable contains a backdoor. The FTP-backdoor hypothesis from the Nmap investigation remains unverified; service greetings alone cannot resolve it.
 
 ## Limitations and remediation
 
-The service-enumeration and independent-validation objectives were fulfilled. Banner validation does not establish binary provenance, patch state, vulnerability presence, or exploitability. Exploit execution, authentication testing, and target file operations were outside this investigation; none was performed.
+The investigation identified the advertised service and corroborated it independently. Binary provenance, patch state, authentication, and exploitability were outside this service-validation scope.
 
-For a real service, I would verify the installed package and its source, assess the actual build, and replace unsupported or untrusted software. The earlier plaintext FTP observation also supports moving required file transfers to an encrypted alternative. A remediation retest would check the replacement's authentication, transport protection, and required operations. No remediation or remediation retest was performed.
+For a real service, I would verify the installed package and its source, assess the actual build, and replace unsupported or untrusted software. The Wireshark plaintext-FTP finding also supports an encrypted transfer alternative. A remediation retest would check authentication, transport protection, and required file operations; none was performed here.
 
 ## Lessons learned
 
-The module determines which question a result can answer. Here, the auxiliary module identified the advertised service, and the direct greeting corroborated it.
+The options listing made the selected host, port, and worker count explicit before the module ran. Its output then had a simple independent check: read the FTP greeting directly and close the connection with QUIT.
 
-For a future service check, I would keep the selected host and port, the module result, and the independent protocol response together. A vulnerability claim would need evidence beyond the advertised version.
+The empty session list was consistent with the auxiliary module's purpose. My takeaway is to choose a module around the question being asked. A successful service-enumeration run answers what the service advertises; a vulnerability finding would need different evidence.

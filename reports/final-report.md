@@ -3,43 +3,43 @@
 Scheduled challenge: October 26 through November 1, 2026
 Status: Completed
 
-My project brings together seven investigations of network discovery, packet behavior, web responses, service identification, and offline password recovery. All seven investigations fulfilled their defined objectives. Each report explains what the evidence establishes and where testing stopped.
+This project connects seven investigations in my cybersecurity lab. My goal was to understand the tools well enough to explain their results, check important observations independently, and identify practical fixes. The completed investigations cover network reconnaissance, packet analysis, web paths, HTTP responses, service identification, password recovery, and web-server configuration.
 
-The dates in the schedule are planned challenge slots. Testing and follow-up continued after that week. Actual collection timestamps, timezones, and evidence provenance are recorded in the private evidence log.
+The scheduled dates identify each tool's place in the challenge. Testing and follow-up continued beyond that week; actual collection timestamps and timezone details are recorded privately.
 
 ## Objectives
 
-- Use the tools against my authorized lab and understand their output.
-- Follow selected results with a separate check.
-- Explain supported findings, practical fixes, and the questions still open.
+- Understand what each tool's output establishes.
+- Check selected results with direct interactions or an independent method.
+- Explain supported findings, meaningful testing boundaries, and remediation priorities.
 
 ## Environment and scope
 
-The target was my Metasploitable 2 VM, identified as TARGET in public commands and excerpts. My physical Kali workstation reached it through the restricted Ubuntu gateway. Gobuster and the original Nikto run used Ubuntu under WSL on the Windows host through its existing host-only connection. John used a disposable local hash in WSL and made no target connection.
+The target was my Metasploitable 2 VM, identified as TARGET in public commands and excerpts. Physical Kali reached it through the restricted Ubuntu gateway. Gobuster and the Nikto scan used Ubuntu under WSL on the Windows host through its existing host-only connection. John's disposable hash exercise ran offline in WSL.
 
-The [lab setup](../docs/lab-setup.md) documents the network, gateway restrictions, and direct host-only path. Target identity was checked using the VM adapter/neighbor MAC match and the lab home page for the Windows path, and the saved route and lab home page for Kali. No router, firewall, SSH, or routing settings were changed during the remaining exercises.
+The [lab setup](../docs/lab-setup.md) explains these paths, the gateway restrictions, and the temporary key-authenticated SSH access from Windows to Kali. Target identity checks used the VM adapter/neighbor MAC match and lab home page for the Windows path, and the saved route and lab home page for Kali. The tool exercises used the established target connections without changing router settings or gateway routing rules.
 
-Tests covered one owned training target and one disposable test hash. Household devices, external systems, real password hashes, denial-of-service tests, and target-initiated callbacks were excluded. The lab is intentionally vulnerable; these results describe its tested state rather than a production deployment.
+Testing covered the owned training target and a disposable test hash. Household devices, external systems, real account hashes, denial-of-service tests, and target-initiated callbacks were outside scope.
 
 ## Commands and approach
 
-| Investigation | Approach and technical outcome | Completion boundary |
+| Investigation | Approach | Technical result |
 | --- | --- | --- |
-| [Day 1: Nmap](../investigations/day-01-nmap/) | Default and targeted reconnaissance, followed by direct shell, SMB and FTP checks | Completed; selected TCP services, with no comprehensive UDP assessment |
-| [Day 2: Wireshark](../investigations/day-02-wireshark/) | ICMP, TCP handshake and SYN-scan comparisons; readable FTP authentication | Completed; original PCAPs unavailable for reanalysis |
-| [Day 3: Gobuster](../investigations/day-03-gobuster/) | 28-entry list, ten result lines, missing-path control and selected HTTP follow-ups | Completed; /server-status timed out and enumeration was limited |
-| [Day 4: Burp Suite](../investigations/day-04-burp-suite/) | Five HTTP-client requests comparing query, method, missing-path and diagnostic responses | Completed; headless HTTP-client comparisons; GUI, Repeater, and injection testing outside scope |
-| [Day 5: Metasploit](../investigations/day-05-metasploit/) | Auxiliary FTP version module, followed by independent greeting and QUIT | Completed; service enumeration and independent validation; exploitation outside scope |
-| [Day 6: John the Ripper](../investigations/day-06-john-the-ripper/) | Negative and positive candidate lists, --show summaries and independent hash comparison | Completed; one generated test hash, with no real-account strength conclusion |
-| [Day 7: Nikto](../investigations/day-07-nikto/) | Bounded configuration/disclosure scan and independent response-header follow-ups | Completed bounded assessment; scan stopped before full selected-test coverage |
+| [Day 1: Nmap](../investigations/day-01-nmap/) | Default and targeted scans, followed by direct service checks | Exposed TCP services; verified root listener, anonymous SMB directory operations, and anonymous FTP acceptance |
+| [Day 2: Wireshark](../investigations/day-02-wireshark/) | Compare generated ICMP, TCP connection, SYN-scan, and FTP traffic | Packet-level explanations of the connections and readable FTP authentication |
+| [Day 3: Gobuster](../investigations/day-03-gobuster/) | Enumerate a 28-entry list, then request selected paths and a missing-path control | Ten result lines; confirmed diagnostic pages and directory indexes; one timeout |
+| [Day 4: Burp Suite](../investigations/day-04-burp-suite/) | Compare five HTTP-client requests and check selected responses independently | Query/method/control comparisons and reproduced diagnostic disclosure |
+| [Day 5: Metasploit](../investigations/day-05-metasploit/) | Run the auxiliary FTP version module and read a separate greeting | Matching vsFTPd 2.3.4 identifications and a normal QUIT reply |
+| [Day 6: John the Ripper](../investigations/day-06-john-the-ripper/) | Compare negative and positive candidate lists, then verify the recovery independently | One disposable value recovered; recomputed hash and known-value comparisons matched |
+| [Day 7: Nikto](../investigations/day-07-nikto/) | Run a time-limited configuration/disclosure scan and inspect selected headers directly | Six reported items; independent header validation; scan terminated at its limit |
 
-The remaining tools were Gobuster 3.6, Burp Community 2026.9, Metasploit 6.5.7, John 1.9.0, and Nikto 2.6.1. The original Nmap and Wireshark reports do not record tool versions. Their reports and evidence are preserved unchanged.
+Recorded versions include Gobuster 3.6, Burp Community 2026.9, Metasploit 6.5.7, John 1.9.0, and Nikto 2.6.1.
 
 ## Evidence and results
 
-Full outputs and sensitive inputs remain private. The public evidence consists of the six existing cropped screenshots and thirteen new text files, including the Gobuster wordlist. Text excerpts state what was redacted or omitted. Diagnostic bodies, credentials, private addresses, packet captures, hashes, and recovered values are excluded.
+The public evidence contains six cropped screenshots and thirteen text files, including the Gobuster wordlist. Each investigation explains its numbered evidence and any redactions. Full diagnostic bodies, authentication values, private addresses, hashes, recovered values, and packet captures remain private. The [evidence notes](../docs/evidence-handling.md) describe the handling practices.
 
-The following findings summarize the supported results. Repeated observations of one endpoint are grouped together rather than counted as separate vulnerabilities.
+The findings below group repeated observations of the same behavior together.
 
 | Finding | Supporting evidence | What was established |
 | --- | --- | --- |
@@ -55,25 +55,29 @@ The following findings summarize the supported results. Repeated observations of
 
 ## Findings
 
-**Exposed root listener - confirmed in Day 1.** This was the clearest demonstrated impact: unauthenticated access allowed root-level commands through an existing listener. It did not require a deployed payload or show privilege escalation from a lower-privilege account. In a real environment, I would remove the listener, investigate why it existed, and assess the host's integrity before trusting it again.
+**Unauthenticated root execution - confirmed.** The TCP/1524 listener accepted harmless identity commands that returned root and uid=0. This demonstrated privileged execution through an existing listener. In a real environment, I would remove the listener, investigate its origin, and assess host integrity before trusting the system again.
 
-**Anonymous file-service access - supported within tested operations.** The SMB test demonstrated anonymous directory creation and deletion. FTP accepted anonymous authentication, and Wireshark showed readable authentication input. I would limit anonymous access to an explicit requirement, apply least privilege, and use an encrypted transfer protocol. File upload, modification, download and deletion permissions were not comprehensively tested across either service.
+**Anonymous file-service access and plaintext FTP - confirmed within the tested operations.** SMB allowed anonymous directory creation and deletion, with cleanup verified. FTP accepted anonymous authentication, and the packet evidence exposed readable authentication input. I would restrict anonymous access to a defined need, apply least privilege, and use encrypted transfer protocols.
 
-**Diagnostic and directory exposure - confirmed through HTTP responses.** The PHP pages revealed runtime/configuration information, while directory indexes exposed navigable directory structure. PHP's [phpinfo documentation](https://www.php.net/manual/en/function.phpinfo.php) describes the diagnostic information that function can emit. I would remove public diagnostic endpoints and disable unnecessary indexes, using the supported server's [directory Options configuration](https://httpd.apache.org/docs/2.4/mod/core.html#options) when planning a replacement deployment. The modern documentation is guidance for that replacement, not proof of the old lab server's configuration.
+**Public diagnostic pages and directory indexes - verified through HTTP requests.** The phpinfo() responses exposed runtime and configuration information, and /dav/ and /test/ displayed directory indexes. Burp reproduced the diagnostic response, and a separate client corroborated it. I would remove public diagnostic endpoints and disable unnecessary indexing. PHP's [phpinfo documentation](https://www.php.net/manual/en/function.phpinfo.php) describes the information the function can expose; Apache's [Options documentation](https://httpd.apache.org/docs/2.4/mod/core.html#options) provides indexing guidance for a supported replacement deployment.
 
-**Version and header observations - confirmed at the response level.** Version strings guide further investigation but cannot establish binary provenance or patch state. The five missing headers were reproduced on selected HTTP responses. Their application impact was not tested. In particular, [HSTS is an HTTPS-delivered policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security); the HTTP-only scan did not validate an HTTPS service or demonstrate an HSTS-related attack.
+**Advertised service versions - independently corroborated.** Metasploit and a separate FTP connection agreed on vsFTPd 2.3.4. Selected HTTP responses advertised PHP/5.2.4-2ubuntu5.10 and Apache/2.2.8. These are service identifications; installed package provenance, patch state, and exploitability need different evidence. The suspected FTP backdoor remains unverified.
 
-**Password recovery - a controlled exercise.** The recovered disposable value was deliberately included in the positive list. The negative result says only that its three candidates failed. This supports a lesson about offline guessing and verification, with no finding about a real user's password. For actual application storage, I would follow maintained [password-hashing guidance](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html), protect the hashes, and choose suitable work factors and unique salts.
+**Missing suggested HTTP headers - independently observed.** Direct requests reproduced the five header omissions reported by Nikto. Their impact depends on the application and browser context. In particular, [HSTS is delivered over HTTPS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security), so its absence on these plain-HTTP responses does not establish the configuration of an HTTPS service.
 
-**Unresolved hypotheses.** The suspected FTP backdoor was not triggered or tested. SMB signing remained scanner-reported from Day 1. No relay, interception, authenticated web authorization, or browser exploit test confirmed additional impact. The Day 5 version module did not resolve these questions.
+**Controlled offline recovery - independently verified.** John's negative list left one hash unresolved. The positive list included the generated value and recovered it; independent hash and known-value comparisons matched. For actual application storage, I would follow maintained [password-hashing guidance](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html), protect stored hashes, and use appropriate work factors and unique salts.
 
 ## Limitations and remediation
 
-The work was a series of bounded learning investigations. It was not an exhaustive penetration test. The main boundaries are the unavailable original Wireshark captures, Gobuster's limited wordlist and one timeout, Burp's HTTP-client scope, Metasploit's banner-validation scope, the single disposable John test hash, and Nikto's time-limit termination. GUI and Repeater testing and Metasploit exploitation were outside the completed exercises.
+Each investigation met its stated objectives within a bounded scope. The meaningful coverage limits are:
 
-Testing did not cover all ports, protocols, virtual hosts, authenticated web paths, application logic, or HTTPS. Root and file-service results from Days 1-2 are historical observations supported by those unchanged investigations; they were not repeated during the remaining investigations. Recommended fixes were not applied, so there are no remediation-pass claims.
+- Nmap covered selected TCP services, with no comprehensive UDP assessment or exact OS identification. File operations beyond the demonstrated SMB directory changes were not comprehensively tested. SMB signing remained scanner-reported.
+- Wireshark's evidence consists of notes and screenshots; the named packet captures were unavailable for reanalysis. The TCP/22 check established a connection without SSH user authentication.
+- Gobuster used a limited wordlist and left /server-status unresolved after a timeout. Burp covered HTTP-client comparisons, with UI errors recorded; GUI/Repeater testing, authenticated web logic, injection, and HTTPS interception were outside scope. The independent OPTIONS request was separate from the five Burp requests.
+- Metasploit validated the advertised FTP service version. Exploit execution and package integrity assessment were outside that investigation. John's one generated hash and constructed wordlists support the controlled recovery result. General password-strength and cracking-speed estimates were outside scope.
+- Nikto reached its 180-second limit before exhausting the selected tests. Follow-ups checked the chosen HTTP responses, without validating HTTPS or demonstrating browser exploitation.
 
-For a production system with these confirmed behaviors, I would prioritize the work as follows:
+No remediation changes or remediation retests were performed. For a production system with these behaviors, I would prioritize the following work:
 
 | Priority | Action and reason | Retest I would perform |
 | --- | --- | --- |
@@ -82,15 +86,13 @@ For a production system with these confirmed behaviors, I would prioritize the w
 | Next | Remove diagnostic endpoints, disable unnecessary indexing, and restrict administration pages | Repeat the affected requests without authentication and check that required application functions still work |
 | Planned hardening | Verify package provenance and support status, replace unsuitable software, and set application-appropriate security headers | Check actual packages and selected GET/HEAD responses; validate HTTPS before assessing HSTS |
 
-These are proposed actions for a real service. No remediation changes were made to the training target or lab network.
-
 ## Lessons learned
 
-The most useful pattern across the project was to turn each output into a specific follow-up question. Nmap identified services to inspect. Wireshark showed the exchanges behind those connections. Gobuster found paths, Burp made the response differences explicit, and Nikto provided configuration observations to validate.
+The investigations build on a useful sequence: identify a service, inspect its behavior, and choose a follow-up that answers a specific question. Nmap's service list led to direct checks, while Wireshark connected the results with packet exchanges. Gobuster's redirects needed destination requests; Burp made the HTTP comparisons explicit.
 
-Metasploit reinforced the boundary between identifying a service and exploiting it. John made the same principle concrete in a different setting: a success counter became a supported result when the recovered value passed an independent check.
+The imperfect results were part of that reasoning. A rejected flag led back to the installed help, a timeout left a path unresolved, and startup errors had to be assessed separately from successful HTTP exchanges. Metasploit's greeting and John's negative/positive controls made independent checks straightforward. Nikto's time-limit termination explained where its coverage stopped.
 
-For a future investigation, I would define any broader web or exploitation scope separately, preserve the original packet captures, and include remediation retests. The completed series supports the selected observations without extending them into untested claims.
+For me, the practical habit to carry forward is to keep the command, visible result, and supported interpretation together. That makes a successful test easier to explain and leaves a clear question when the evidence stops short.
 
 ## Evidence index
 
@@ -114,5 +116,3 @@ For a future investigation, I would define any broader web or exploitation scope
 | D6-03 | [Independent check](../investigations/day-06-john-the-ripper/evidence/sanitized-results/03-independent-check.txt) | Hash/value comparison |
 | D7-01 | [Bounded scan](../investigations/day-07-nikto/evidence/sanitized-results/01-bounded-scan.txt) | Alerts and termination |
 | D7-02 | [Header validation](../investigations/day-07-nikto/evidence/sanitized-results/02-header-validation.txt) | Independent response headers |
-
-Actual collection times and timezone details are retained in the private evidence log. The original screenshot-based investigations retain their existing date statements.

@@ -5,7 +5,7 @@ Focus: Web directory enumeration
 
 Status: Completed
 
-My goal was to connect Gobuster's path results with the content those paths returned. The follow-ups distinguish redirects, diagnostic pages, and directory indexes.
+After looking at exposed services and their traffic, my next question was what the web server made reachable. Gobuster returned paths to check, and the HTTP follow-ups separated redirects, diagnostic pages, and directory indexes.
 
 ## Objectives
 
@@ -17,7 +17,7 @@ My goal was to connect Gobuster's path results with the content those paths retu
 
 The Gobuster 3.6 run used Ubuntu under WSL on my Windows host to assess the Metasploitable 2 web server on HTTP/80. This traffic used the existing VMnet1 host-only connection. The target's neighbor-table MAC matched its VM adapter, and its home page identified Metasploitable 2.
 
-This was a different testing path from the physical Kali workstation described in my [lab setup](../../docs/lab-setup.md). No route or firewall rule changed. TARGET replaces the private target address below.
+This was a different testing path from the physical Kali workstation described in my [lab setup](../../docs/lab-setup.md). The run used that existing connection. TARGET replaces the private target address below.
 
 ## Commands and approach
 
@@ -44,7 +44,7 @@ Both /phpinfo and /phpinfo.php returned diagnostic pages reporting PHP Version 5
 
 ## Findings
 
-**Public diagnostic information - verified by follow-up requests.** The phpinfo() pages exposed runtime and configuration information without authentication. That information can help someone select further tests and learn details that a public application does not need to disclose.
+**Public diagnostic information - verified by follow-up requests.** The phpinfo() pages exposed runtime and configuration information without authentication. That information can help someone select further tests and learn unnecessary details about the application environment.
 
 **Directory indexes - verified by follow-up requests.** The /dav/ and /test/ responses displayed directory indexes. Index visibility can reveal filenames and application structure. These requests did not establish upload, write, or deletion permissions.
 
@@ -58,6 +58,6 @@ For a real service, I would remove public phpinfo() endpoints, disable unnecessa
 
 ## Lessons learned
 
-A discovered path is a lead for the next check. I would read the destination response before drawing a conclusion from its redirect status.
+A 301 result left another request to make. The destination of /dvwa/ redirected again, while /dav/ and /test/ displayed directory indexes. Those different outcomes explain why I want the response body beside a scanner's path list.
 
-In a future enumeration, I would keep the missing-path control beside the results and record timeouts separately. A timeout answers less than a completed response.
+The rejected -l option was a useful reminder to check the installed tool's help. The /server-status timeout needed a different kind of care: it left the endpoint unresolved, even though the rest of the enumeration finished.

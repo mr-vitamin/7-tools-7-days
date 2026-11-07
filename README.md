@@ -1,41 +1,41 @@
 # 7 Tools in 7 Days
 
-I'm a cybersecurity student taking on a seven-day challenge to get hands-on experience with penetration testing tools, strengthen my Kali Linux and networking fundamentals, and build practical cybersecurity skills.
+I'm a cybersecurity student interested in how security tools work, what their results mean, and how to check those results. This completed project brings together seven hands-on investigations in my authorized lab.
 
-The scheduled challenge runs from October 26 through November 1, 2026. I focus on one tool per investigation and keep a record of commands, results, and questions. Testing and follow-up continued after the scheduled week; actual execution timestamps are retained in the private evidence log.
+The investigations connect network reconnaissance and packet analysis with web enumeration, HTTP testing, service validation, password recovery, and web-server assessment. Each report includes commands, supporting evidence, troubleshooting, findings, and lessons learned.
 
-**Current status: All seven investigations completed within their defined scope.** Each write-up includes supporting evidence, findings, and testing boundaries. The [final project report](reports/final-report.md) brings the results and remediation priorities together.
+## Seven completed investigations
 
-## Seven-day schedule
+The scheduled challenge ran from October 26 through November 1, 2026. Testing and follow-up continued beyond that week. These are scheduled dates; actual collection timestamps and timezone details are recorded privately.
 
-| Day | Scheduled date | Tool | Focus |
+| Day | Scheduled date | Investigation | Focus |
 | --- | --- | --- | --- |
-| 1 | October 26 | Nmap | Network reconnaissance |
-| 2 | October 27 | Wireshark | Packet analysis |
-| 3 | October 28 | Gobuster | Web directory enumeration |
-| 4 | October 29 | Burp Suite | Web application testing |
-| 5 | October 30 | Metasploit | Service enumeration and FTP version validation |
-| 6 | October 31 | John the Ripper | Password auditing |
-| 7 | November 1 | Nikto | Web server assessment and final report |
+| 1 | October 26 | [Nmap](investigations/day-01-nmap/) | Network reconnaissance |
+| 2 | October 27 | [Wireshark](investigations/day-02-wireshark/) | Packet analysis |
+| 3 | October 28 | [Gobuster](investigations/day-03-gobuster/) | Web directory enumeration |
+| 4 | October 29 | [Burp Suite](investigations/day-04-burp-suite/) | HTTP request and response testing |
+| 5 | October 30 | [Metasploit](investigations/day-05-metasploit/) | Service enumeration and FTP version validation |
+| 6 | October 31 | [John the Ripper](investigations/day-06-john-the-ripper/) | Controlled password recovery |
+| 7 | November 1 | [Nikto](investigations/day-07-nikto/) | Bounded web-server assessment |
 
-[Progress tracker](PROGRESS.md)
+The [final project report](reports/final-report.md) connects the results, explains their impact, and prioritizes remediation. The [progress tracker](PROGRESS.md) lists all seven completed investigations.
 
-## Lab infrastructure
+## What the project demonstrates
 
-My lab uses a dedicated physical Kali workstation and VMware Workstation on Windows, with Metasploitable 2 behind a restricted Ubuntu gateway. I've checked target connectivity, a blocked outbound probe, and behavior after reboot. My [lab setup notes](docs/lab-setup.md) cover the network design, troubleshooting, and testing limits.
+- Turning open ports and service identifications into specific follow-up tests.
+- Reading packet sequences and recognizing plaintext authentication traffic.
+- Checking discovered web paths and comparing HTTP responses.
+- Corroborating a tool result with a separate protocol or hash check.
+- Explaining the difference between a confirmed finding and an untested possibility.
 
-Testing is limited to my own training systems or explicitly authorized targets. Raw evidence stays in a private shared workspace; only reviewed, sanitized material belongs here.
+The supported findings include unauthenticated root command execution through an existing listener, anonymous SMB directory changes, readable FTP authentication, public diagnostic pages, and directory indexes. The daily reports explain the evidence behind each result and the limits of the tests.
 
-## What I want to learn
+## Lab and evidence
 
-- Use each tool and understand its options and output.
-- Connect the exercises to Linux commands, networking, and troubleshooting.
-- Use evidence to explain findings and evaluate tool alerts.
-- Recognize gaps in my testing and suggest practical fixes for supported findings.
-- Write clear investigation notes and a final report.
+My lab combines a physical Kali workstation, a Windows VMware host, Metasploitable 2, and a restricted Ubuntu gateway. Some exercises used Ubuntu under WSL on the Windows host. The [lab setup](docs/lab-setup.md) explains the testing paths, temporary SSH access to Kali, and isolation checks.
 
-## Project notes
+Testing stayed within the owned lab and a disposable local hash exercise. The [evidence notes](docs/evidence-handling.md) describe the published screenshots and text excerpts. Full outputs, private addresses, authentication values, hashes, and packet captures remain outside this repository.
 
-The [investigations](investigations/) folder records each day's commands, evidence, findings, limitations, and lessons learned. The [templates](templates/) remain available for future investigations. My [Kali fundamentals log](docs/kali-fundamentals.md) is a separate study backlog.
+## Reusable materials
 
-The [final project report](reports/final-report.md) summarizes the seven tools, supported findings, remediation priorities, and coverage gaps. My [evidence notes](docs/evidence-handling.md) describe the separation between private originals and sanitized public copies.
+The [templates](templates/) are blank starting points for other investigations. They are separate from the completed reports above.

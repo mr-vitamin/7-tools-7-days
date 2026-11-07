@@ -49,7 +49,7 @@ The SSH-port capture used an ephemeral client port and contained FIN and RST pac
 
 The four-port scan's probe order differed from the command's port order. It reused one source port across different destination ports, producing distinct endpoint combinations. A separate ICMP request had no matching reply in the capture. The TCP probes received responses.
 
-## Security concepts and findings
+## Findings
 
 **Plaintext FTP authentication — observed.** I could read the submitted authentication values in the capture. The first test login was rejected; anonymous authentication later succeeded.
 
@@ -59,8 +59,7 @@ The four-port scan's probe order differed from the command's port order. It reus
 
 ## Limitations and remediation
 
-The available evidence consists of lab notes and screenshots. The PCAP files named in the original screenshots were unavailable for reanalysis. Published excerpts omit raw packet bytes and cover authentication values.
-
+The evidence consists of lab notes and screenshots. The PCAP files named in the screenshots were unavailable for reanalysis. Published excerpts omit raw packet bytes and cover authentication values.
 
 Testing covered traffic I generated to my target. I performed no ARP poisoning, interception of household sessions, SSH decryption, or HTTPS interception. The TCP/22 test verified a connection, with no SSH user authentication. The FTP success response confirmed acceptance of the anonymous login; verification of the supplied email address was not established.
 
@@ -69,6 +68,6 @@ For a real service, I would replace plaintext FTP with an appropriate encrypted 
 
 ## Lessons learned
 
-Comparing packet sequences with the command that generated them made the scan results easier to understand. I could follow connection setup, service identification, and closure as separate parts of the exchange.
+Comparing packet sequences with the command that generated them made the scan results easier to understand. I could follow connection setup, service identification, and closure, then compare that exchange with the shorter SYN-scan pattern.
 
-Seeing the FTP authentication fields in readable packets made the exposure concrete. It gave me a practical reason to choose encrypted file-transfer protocols.
+Seeing the FTP authentication fields in readable packets made the exposure concrete. The rejected login and later success response also showed why a submitted value and an accepted login need to be interpreted separately. That gave me a practical reason to choose encrypted file-transfer protocols.

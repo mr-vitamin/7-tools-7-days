@@ -1,57 +1,48 @@
-# Final penetration-testing report
+# Final project report template
 
-Status: Not Started
-Author:
-Assessment dates:
-Report date and version:
+Reusable blank template for a future assessment or learning project. The completed report for 7 Tools in 7 Days is [here](../reports/final-report.md).
 
-## Executive summary
-What I tested:
-Main supported findings:
-Most important limitations:
+Project: [title]
+Status: [set from completed objectives]
+Scheduled dates: [if applicable]
+Testing dates: [actual dates or reference to a private evidence record]
 
-## Authorization and scope
-Approved target aliases and permission:
-Activities included:
-Systems or activities excluded:
+## Objectives
 
-## Lab and approach
-Environment and tool versions:
-Investigations performed:
-What the testing covered:
+[Explain the project's purpose and the questions it addresses.]
 
-## Findings summary
+## Environment and scope
 
-Not assessed.
+[Identify authorized target aliases, the lab, testing paths, and boundaries.]
 
-| ID | Finding | Target alias | Severity and reasoning | Evidence | Status |
-| --- | --- | --- | --- | --- | --- |
+## Commands and approach
 
-## Finding details
+| Investigation | Approach | Technical outcome |
+| --- | --- | --- |
+| [Linked investigation] | [Methods used] | [Supported result] |
 
-Finding ID and title:
-What I observed:
-Sanitized steps to reproduce:
-Supporting evidence IDs:
-Impact and severity reasoning:
-Suggested fix:
-How I would retest:
-Retest outcome: Not performed
+## Evidence and results
 
-## Limitations
-Coverage gaps:
-Assumptions:
-Alerts or observations I couldn't verify:
+| Finding or observation | Evidence | What it establishes |
+| --- | --- | --- |
+| [Specific observation] | [Evidence identifiers] | [Supported interpretation] |
 
-## Remediation priorities
-Which supported findings I would address first, and why:
+## Findings
 
-## Reflection
-What I learned:
-What I can explain or demonstrate from this work:
-Where I need more practice:
+[Explain the important findings, relevant impact, and verification status. Keep unverified possibilities labeled.]
+
+## Limitations and remediation
+
+[Consolidate coverage gaps and propose fixes in priority order. Describe meaningful retests and any results actually obtained.]
+
+## Lessons learned
+
+[Connect the investigations through their technical reasoning, unexpected results, and lessons.]
 
 ## Evidence index
 
-| Evidence ID | Reviewed file | Collection time and timezone | Related finding |
-| --- | --- | --- | --- |
+| Evidence ID | Reviewed file | Related finding |
+| --- | --- | --- |
+| [Identifier] | [Relative link] | [Finding or observation] |
+
+[Record actual collection times, timezone, redactions, and provenance in the appropriate evidence record.]

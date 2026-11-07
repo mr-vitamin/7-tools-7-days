@@ -1,11 +1,11 @@
 # Day 4: Burp Suite
 
 Scheduled: 2026-10-29
-Focus: Web application testing
+Focus: HTTP request and response testing
 
 Status: Completed
 
-This investigation compares individual HTTP requests and responses with Burp. My focus was on a query-string change, a different request method, a missing path, and the diagnostic page found during enumeration.
+The web paths from Gobuster gave this investigation something specific to examine. My focus was how individual HTTP requests affected the response: a query-string change, HEAD instead of GET, a missing path, and the diagnostic page.
 
 ## Objectives
 
@@ -17,7 +17,7 @@ This investigation compares individual HTTP requests and responses with Burp. My
 
 The Burp Suite Community Edition 2026.9 exercise ran on my physical Kali workstation against Metasploitable 2 on HTTP/80 through the existing Ubuntu gateway. The target's home page and the saved route were checked before testing. My [lab setup](../../docs/lab-setup.md) describes the path and restrictions.
 
-Burp's HTTP client sent five requests through its extension API in headless mode. Interception was disabled, and scope included only the target's HTTP URL. TARGET replaces the private address. This exercise used no authenticated session or automated vulnerability scan.
+Burp's HTTP client sent five requests through its extension API in headless mode. Interception was disabled, and scope included only the target's HTTP URL. TARGET replaces the private address. The requests were unauthenticated.
 
 ## Commands and approach
 
@@ -31,7 +31,7 @@ Burp's HTTP client sent five requests through its extension API in headless mode
 | Host: TARGET; Connection: close | Keep each request directed at the lab host and close its connection |
 | Python urllib requests from Kali | Check selected responses independently of Burp |
 
-An earlier headless launch under WSL produced Java/Swing errors before any target test. The installed Kali copy completed all five requests after a startup-option syntax correction. UI errors were still logged, while the saved request/response pairs verified the HTTP-client function.
+An earlier headless launch under WSL produced Java/Swing errors before any target test. The installed Kali copy initially required a startup-option correction: its value had to be attached with an equals sign. With that corrected, the HTTP client completed all five requests. UI errors were still logged, while the saved request/response pairs verified the HTTP-client function.
 
 ## Evidence and results
 
@@ -43,22 +43,24 @@ An earlier headless launch under WSL produced Java/Swing errors before any targe
 
 The excerpts preserve request methods, paths, status lines, selected headers, and relevant body strings. Addresses and execution timestamps are omitted or replaced; complete bodies remain private.
 
-The unchanged home-page body after adding lab=day4 does not establish that the application processed or validated the parameter. HEAD's empty body was consistent with its purpose; the matching status did not mean it returned the GET body.
+The home-page body stayed identical after adding lab=day4, so the result leaves parameter handling unresolved. HEAD returned the same success status with an empty body, consistent with its purpose.
+
+The separate client also sent OPTIONS / and received 200. This was an additional HTTP observation in D4-03, separate from the five Burp requests. That response alone does not establish which methods the application permits.
 
 ## Findings
 
 **Diagnostic disclosure - independently reproduced.** Burp retrieved the phpinfo() page without authentication. A separate client confirmed the same endpoint and title. This supports the Day 3 disclosure finding and adds a second tool's request/response evidence.
 
-**Request handling - observed.** The query variation, HEAD request, and missing-path control produced distinguishable results. These comparisons establish response behavior for the tested requests. They do not demonstrate input validation, injection, or authentication bypass.
+**Request handling - observed.** The query variation, HEAD request, and missing-path control produced distinguishable results. These comparisons establish the response behavior of the selected requests. Validation, injection, and authorization questions remain outside this request-comparison exercise.
 
 ## Limitations and remediation
 
-Testing covered five Burp HTTP-client requests and separate read-only follow-ups. Forms, session handling, authorization between users, SQL injection, script execution, and HTTPS interception were outside this exercise. Burp's UI errors limit what I can claim about the headless interface, while the saved responses support the HTTP-client results.
+The exercise covered five Burp HTTP-client requests and separate read-only checks. The saved exchanges support the HTTP comparisons despite the startup UI errors. GUI and Repeater operation, authenticated sessions, forms, injection, and HTTPS interception were outside the tested scope.
 
-For a production application, I would remove or restrict the diagnostic page and reduce unnecessary server-version disclosure. I would retest that endpoint from an unauthenticated client and verify the application's required routes afterward. No server changes or remediation retest were performed.
+For a production application, I would remove or restrict the diagnostic page and reduce unnecessary server-version disclosure. The retest would request that endpoint without authentication and check the application's required routes. No remediation changes or retests were performed.
 
 ## Lessons learned
 
-For HTTP comparisons, I would change one part of a request at a time. The control response shows why a 200 status needs the body and request context beside it.
+The unchanged response to the query-string variation was as useful as a changed response would have been: it defined what the comparison could support. HEAD and the missing-path control added context without changing several request properties at once.
 
-For future tests, I would check each tool function against its saved results. The HTTP-client evidence here supports the comparisons; GUI and Repeater operation were not tested.
+The startup errors also needed to stay separate from the HTTP results. For me, the useful check is the saved exchange for the function being tested. Here, the five completed exchanges support the HTTP-client investigation.
